@@ -3,7 +3,7 @@
     <div style="width: 80%;margin: 0 auto;">
       <router-link to="/index">首页</router-link>
       <el-form-item
-        label="id"
+        label="班级"
         :label-width="80"
         style="display:inline-flex; margin-right: 10px;"
       >
@@ -210,14 +210,14 @@ export default defineComponent({
     },
     search() {
       if (this.searchid == "") {
-        alert("请输入班级名称后查询");
+        alert("请输入班级ID后查询");
         return;
       }
       classinfoone(this.searchid)
         .then((res) => {
           console.log(res);
-          this.classinfos = Array.from(res.data.classinfo);
-          console.log(this.classinfos);
+          this.classinfos=[];
+          this.classinfos.push(res.data.classinfo);
         })
         .catch((err) => {
           console.log(err);

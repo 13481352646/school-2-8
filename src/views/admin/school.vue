@@ -3,13 +3,13 @@
     <div style="width: 80%;margin: 0 auto;">
       <router-link to="/index">首页</router-link>
       <el-form-item
-        label="名称"
+        label="学校"
         :label-width="80"
         style="display:inline-flex; margin-right: 10px;"
       >
         <el-input
           v-model="searchNo"
-          placeholder="请输入学校名称"
+          placeholder="请输入学校ID"
         ></el-input>
       </el-form-item>
 
@@ -248,16 +248,14 @@ export default defineComponent({
     },
     search() {
       if (this.searchNo == "") {
-        alert("请选择后进行查询");
+        alert("请输入后进行查询");
         return;
       }
       getOne(this.searchNo)
         .then((res) => {
           console.log(res);
-          const schoolsArray = Array.from(res.data.school);
           this.Schools=[];
-          this.Schools = schoolsArray;
-          console.log(this.Schools);
+          this.Schools.push(res.data.school);
         })
         .catch((err) => {
           console.log(err);
