@@ -1,24 +1,16 @@
 <template>
   <div>
     <div style="width: 80%;margin: 0 auto;">
+      <router-link to="/index">首页</router-link>
       <el-form-item
-        label="学校是否启用"
-        :label-width="120"
+        label="学生学号"
+        :label-width="80"
         style="display:inline-flex; margin-right: 10px;"
       >
-        <el-select
-          v-model="searchEnable"
-          placeholder="请选择"
-        >
-          <el-option
-            label="启用"
-            :value="0"
-          />
-          <el-option
-            label="未启用"
-            :value="1"
-          />
-        </el-select>
+        <el-input
+          v-model="searchNo"
+          placeholder="请输入学生学号"
+        ></el-input>
       </el-form-item>
 
       <el-button
@@ -26,7 +18,6 @@
         @click="search"
       >查询</el-button>
 
-      
       <el-button
         type="warning"
         @click="research"
@@ -38,8 +29,8 @@
       >添加</el-button>
     </div>
     <el-table
-      :data="Schools"
-      style="width: 80%;margin: 0 auto;"
+      :data="Students"
+      style="width: 80%; margin: 0 auto"
     >
       <el-table-column
         fixed
@@ -48,29 +39,38 @@
         width="50"
       />
       <el-table-column
-        prop="schoolName"
-        label="学校名称"
+        prop="studentNo"
+        label="	学号"
         width="120"
       />
       <el-table-column
-        prop="province"
-        label="省"
-        width="120"
-      />
-
-      <el-table-column
-        prop="area"
-        label="市|县"
+        prop="studentName"
+        label="姓名"
         width="120"
       />
       <el-table-column
-        prop="address"
-        label="地址"
+        prop="school"
+        label="学校"
         width="120"
       />
       <el-table-column
-        prop="description"
-        label="学校说明"
+        prop="major"
+        label="专业"
+        width="120"
+      />
+      <el-table-column
+        prop="depart"
+        label="部门"
+        width="120"
+      />
+      <el-table-column
+        prop="major"
+        label="专业"
+        width="120"
+      />
+      <el-table-column
+        prop="classinfo"
+        label="班级"
         width="120"
       />
       <el-table-column
@@ -89,13 +89,13 @@
         <template #default="scope">
           <el-button
             link
-            type="warning"
+            type="primary"
             size="small"
             @click="toEdit(scope.row)"
           >更新</el-button>
           <el-button
             link
-            type="danger"
+            type="primary"
             size="small"
             @click="del(scope.row.id)"
           >删除</el-button>
@@ -105,95 +105,63 @@
   </div>
   <el-dialog
     v-model="dialogFormVisible"
-    title="学校编辑"
+    title="学生编辑"
   >
-    <el-form :model="School">
+    <el-form :model="Student">
       <el-form-item
-        label="学校名称"
+        label="学号"
         :label-width="formLabelWidth"
       >
         <el-input
-          v-model="School.schoolName"
+          v-model="Student.studentNo"
           autocomplete="off"
         />
       </el-form-item>
       <el-form-item
-        label="省"
+        label="姓名"
         :label-width="formLabelWidth"
       >
         <el-input
-          v-model="School.province"
+          v-model="Student.studentName"
           autocomplete="off"
         />
       </el-form-item>
       <el-form-item
-        label="市|县"
+        label="班级"
         :label-width="formLabelWidth"
       >
         <el-input
-          v-model="School.area"
+          v-model="Student.classinfo"
           autocomplete="off"
         />
       </el-form-item>
 
       <el-form-item
-        label="城市"
+        label="学校"
         :label-width="formLabelWidth"
       >
         <el-input
-          v-model="School.city"
+          v-model="Student.school"
           autocomplete="off"
         />
       </el-form-item>
-
       <el-form-item
-        label="地址"
+        label="专业"
         :label-width="formLabelWidth"
       >
         <el-input
-          v-model="School.address"
-          autocomplete="off"
-        />
-      </el-form-item>
-
-      <el-form-item
-        label="经度"
-        :label-width="formLabelWidth"
-      >
-        <el-input-number
-          v-model="School.longitude"
-          autocomplete="off"
-        />
-      </el-form-item>
-
-      <el-form-item
-        label="纬度"
-        :label-width="formLabelWidth"
-      >
-        <el-input-number
-          v-model="School.latitude"
+          v-model="Student.major"
           autocomplete="off"
         />
       </el-form-item>
       <el-form-item
-        label="是否删除"
-        :label-width="formLabelWidth"
-      >
-        <el-radio-group v-model="School.deleted">
-          <el-radio :label="1">是</el-radio>
-          <el-radio :label="0">否</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item
-        label="学校说明"
+        label="部门"
         :label-width="formLabelWidth"
       >
         <el-input
-          type="textarea"
-          :rows="3"
-          v-model="School.description"
-        >
-        </el-input>
+          v-model="Student.depart"
+          autocomplete="off"
+        />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -214,8 +182,8 @@
       placeholder="Please input"
     /></template>
 </template>
-  
-  <script>
+
+<script>
 import { defineComponent } from "vue";
 //
 import {
@@ -223,52 +191,50 @@ import {
   addOne,
   updateOne,
   delOne,
-  queryByEnable,
-} from "@/http/school";
+  queryByStudetnNo,
+} from "@/http/student";
 import { ElMessage } from "element-plus";
 import { cloneDeep } from "lodash-es";
 export default defineComponent({
   data() {
     return {
       input: "",
-      Schools: [],
-      searchEnable: null,
+      Students: [],
       dialogFormVisible: false,
-      School: {
+      Student: {
         id: 0,
-        deleted: 0,
-        latitude: 0,
-        longitude: 0,
       },
+      searchNo: "",
       formLabelWidth: 80,
     };
   },
   mounted() {
-    this.getSchoolList();
+    this.getStudentList();
   },
   methods: {
-    research(){
-      this.searchEnable = null;
-      this.getSchoolList();
+    research() {
+      this.searchNo = "";
+      this.getStudentList();
     },
     search() {
-      if (this.searchEnable == null) {
-        alert("请选择后进行查询");
+      if (this.searchNo == "") {
+        alert("请输入学生学号后进行查询");
         return;
       }
-      queryByEnable(this.searchEnable)
+      queryByStudetnNo(this.searchNo)
         .then((res) => {
           console.log(res);
-          this.Schools = res.data.schools;
-          console.log(this.Schools);
+          this.Students=[];
+          this.Students.push(res.data.student)
+          console.log(this.Students);
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    toEdit(School) {
+    toEdit(student) {
       this.dialogFormVisible = true;
-      this.School = cloneDeep(School);
+      this.Student = cloneDeep(student);
     },
     //时间转换
     transformTimestamp(timestamp) {
@@ -290,12 +256,12 @@ export default defineComponent({
       // console.log('dateString', dateString); // > dateString 2021-07-06 14:23
       return dateString;
     },
-    getSchoolList() {
+    getStudentList() {
       getAll()
         .then((res) => {
           console.log(res);
-          this.Schools = res.data.schools;
-          console.log(this.Schools);
+          this.Students = res.data.students;
+          console.log(this.Students);
         })
         .catch((err) => {
           console.log(err);
@@ -305,7 +271,7 @@ export default defineComponent({
       delOne(id)
         .then((res) => {
           if (res.success) {
-            this.getSchoolList();
+            this.getStudentList();
           } else {
             console.log(res.msg);
             return false;
@@ -318,14 +284,14 @@ export default defineComponent({
       this.dialogFormVisible = true;
     },
     save() {
-      const School = this.School;
-      if (School.id == 0) {
-        addOne(School)
+      const student = this.Student;
+      if (student.id == 0) {
+        addOne(student)
           .then((res) => {
             if (res.success) {
               //刷新页面
               this.dialogFormVisible = false;
-              this.getSchoolList();
+              this.getStudentList();
               ElMessage(res.msg);
             } else {
               ElMessage(res.msg);
@@ -336,12 +302,12 @@ export default defineComponent({
             ElMessage("网络错误联系管理员");
           });
       } else {
-        updateOne(School)
+        updateOne(student)
           .then((res) => {
             if (res.success) {
               //刷新页面
               this.dialogFormVisible = false;
-              this.getSchoolList();
+              this.getStudentList();
               ElMessage(res.msg);
             } else {
               ElMessage(res.msg);
@@ -356,6 +322,5 @@ export default defineComponent({
   },
 });
 </script>
-  
-  <style lang="scss" scoped></style>
-  
+
+<style lang="scss" scoped></style>

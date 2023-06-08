@@ -1,6 +1,7 @@
 <template>
   <div>
     <div style="width: 80%;margin: 0 auto;">
+      <router-link to="/index">首页</router-link>
       <el-button
         type="success"
         @click="toAdd"

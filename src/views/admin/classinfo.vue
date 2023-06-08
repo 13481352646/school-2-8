@@ -1,14 +1,15 @@
 <template>
   <div>
     <div style="width: 80%;margin: 0 auto;">
+      <router-link to="/index">首页</router-link>
       <el-form-item
-        label="学校名称"
+        label="id"
         :label-width="80"
         style="display:inline-flex; margin-right: 10px;"
       >
         <el-input
-          v-model="searchSchoolName"
-          placeholder="请输入学校名称"
+          v-model="searchid"
+          placeholder="请输入班级ID"
         ></el-input>
       </el-form-item>
 
@@ -168,6 +169,7 @@
 <script>
 import { defineComponent } from "vue";
 import {
+  classinfoone,
   classinfoAdd,
   classinfoEdit,
   classinfoDelId,
@@ -178,13 +180,14 @@ import { cloneDeep } from "lodash-es";
 export default defineComponent({
   data() {
     return {
+      input: "",
       classinfos: [],
       page: {
         total: 0,
         current: 1,
         size: 10,
       },
-      searchSchoolName: "",
+      searchid: "",
       dialogFormVisible: false,
       classinfo: {
         id: 0,
@@ -202,24 +205,19 @@ export default defineComponent({
   },
   methods: {
     research() {
-      this.searchSchoolName = "";
+      this.searchid = "";
       this.getclassinfosPage(1);
     },
     search() {
-      if (this.searchSchoolName == "") {
-        alert("请输入学校名称后查询");
+      if (this.searchid == "") {
+        alert("请输入班级名称后查询");
         return;
       }
-      queryBySchoolName(this.searchSchoolName, 1, 10)
+      classinfoone(this.searchid)
         .then((res) => {
           console.log(res);
-          if (res.data == null) {
-            this.classinfos = [];
-          } else {
-            const page = res.data.page;
-            this.classinfos = page.records;
-            this.page = page;
-          }
+          this.classinfos = Array.from(res.data.classinfo);
+          console.log(this.classinfos);
         })
         .catch((err) => {
           console.log(err);
@@ -238,9 +236,10 @@ export default defineComponent({
       classinfoPage(data)
         .then((res) => {
           console.log(res);
-          const page = res.data.page;
-          this.classinfos = page.records;
-          this.page = page;
+          // const page = res.data.page.records;
+          this.classinfos = res.data.page.records;
+          // this.page = page;
+          console.log(this.classinfos);
         })
         .catch((err) => {
           console.log(err);

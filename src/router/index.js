@@ -27,82 +27,29 @@ const routes = [
         component: () => import('../views/static/adCate.vue')// 懒加载
     },
     {
-        path: '/memorabilia', name: 'memorabilia', component: () => import('../views/admin/memorabilia.vue') //懒加载 
+        path: '/classinfo', name: 'classinfo', component: () => import('../views/admin/classinfo.vue') //懒加载 
     },
     {
-        path: '/classroom', name: 'classroom', component: () => import('../views/static/classroom.vue') //懒加载 
+        path: '/subject', name: 'subject', component: () => import('../views/admin/subject.vue') //懒加载 
     },
     {
-        path: '/classinfo', name: 'classinfo', component: () => import('../views/static/classinfo.vue') //懒加载 
-    },
-    {
-        path: '/subject', name: 'subject', component: () => import('../views/static/subject.vue') //懒加载 
-    },
-    {
-        path: '/school', name: 'school', component: () => import('../views/static/school.vue') //懒加载 
-    },
-    {
-        path: '/copyright', name: 'copyright', component: () => import('../views/static/copyright.vue') //懒加载 
-    },
-    {
-        path: '/department',
-        name: 'department',
-        component: () => import('@/views/admin/department.vue'), // 懒加载
+        path: '/school', name: 'school', component: () => import('../views/admin/school.vue') //懒加载 
     },
     {
         path: '/major', name: 'major', component: () => import('../views/admin/major.vue') //懒加载 
     },
     {
-        path: '/articleCat4', name: 'articleCat4', component: () => import('../views/static/articleCat4.vue') //懒加载 
+        path: '/student', name: 'student', component: () => import('../views/admin/student.vue') //懒加载 
     },
     {
-        path: '/backend', name: 'backend', component: () => import('../views/static/backend.vue') //懒加载 
-    },
-    {
-        path: '/student', name: 'student', component: () => import('../views/static/student.vue') //懒加载 
-    },
-    {
-        path: '/patent',
-        name: 'patent',
-        component: () => import('../views/static/patent.vue'), // 懒加载
-    },
-    {
-        path: '/adCate',
-        name: 'adCate',
-        component: () => import('../views/static/adCate.vue'), // 懒加载
-    },
-    {
-        path: '/course',
-        name: 'course',
-        component: () => import('../views/static/course.vue'), // 懒加载
-    },
-    {
-        path: '/menurule',
-        name: 'menurule',
-        component: () => import('../views/static/menurule.vue'), // 懒加载
-    },
-    {
-        path: '/competition',
-        name: 'competition',
-        component: () => import('../views/static/competition.vue'), // 懒加载
+        path: '/index',
+        name: 'index',
+        component: () => import('../views/static/index.vue')// 懒加载
     },
     {
         path: '/login',
         name: 'login',
         component: () => import('../views/static/login.vue')// 懒加载
-    },
-    {
-        path: '/frontendMenu',
-        name: 'frontendMenu',
-        component: () => import('@/views/admin/frontendMenu.vue'), // 懒加载
-    },
-    {
-        path: '/interview',
-        name: 'interview',
-        component: () => import('../views/admin/interviewcontroller.vue')// 懒加载
-    },
-    {
-        path: '/dormitory', name: 'dormitory', component: () => import('../views/admin/dormitory.vue') //懒加载 
     },
     {
         path: '/admin',

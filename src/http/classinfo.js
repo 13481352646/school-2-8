@@ -15,11 +15,10 @@ const classinfoAll=(data)=>{
         data
     })
 }
-const classinfoone=(data)=>{
-    return instance.request({
-        url:'api/classinfo/one',
+const classinfoone=(id)=>{
+    return request({
+        url:'/api/classinfo/one/'+id,
         method:'get',
-        data
     })
 }
 const classinfoAdd=(data)=>{

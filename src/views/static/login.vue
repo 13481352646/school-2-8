@@ -105,7 +105,7 @@ export default defineComponent({
                             that.setToken(userinfo.token);
                             that.fillUserinfo(userinfo);
                             that.$router.push('/');
-
+                            console.log(userinfo.token);
                         }
                         else {
 

@@ -52,5 +52,13 @@ export function queryByStudetnNo(studentNo) {
 	});
 }
 
+export function checkname(data) {
+	return request({
+		url: '/api/school/checkname',
+		method: 'get',
+		data
+	});
+}
+
 
 

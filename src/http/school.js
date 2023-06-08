@@ -7,9 +7,9 @@ export function getAll(){
 	});
 }
 
-export function getOne(data){
+export function getOne(id){
 	return request({
-		url: `/api/school/one?id=${data}`,
+		url: `/api/school/one?id=${id}`,
 		method: 'get',
 	});
 }
