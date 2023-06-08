@@ -2,6 +2,20 @@
   <div>
     <div style="width: 80%;margin: 0 auto;">
       <router-link to="/index">首页</router-link>
+      <el-form-item
+        label="科研"
+        :label-width="80"
+        style="display:inline-flex; margin-right: 10px;"
+      >
+        <el-input
+          v-model="searchNo"
+          placeholder="请输入对应科研ID"
+        ></el-input>
+      </el-form-item>
+      <el-button
+        type="primary"
+        @click="search"
+      >查询</el-button>
       <el-button
         type="success"
         @click="toAdd"
@@ -33,6 +47,11 @@
         width="120"
       />
       <el-table-column
+        prop="userId"
+        label="负责人"
+        width="120"
+      />
+      <el-table-column
         prop="participant"
         label="参与者"
         width="120"
@@ -44,7 +63,7 @@
       />
 
       <el-table-column
-        prop="rank"
+        prop="level"
         label="课题等级"
         width="120"
       />
@@ -101,7 +120,7 @@
         :label-width="formLabelWidth"
       >
         <el-input
-          v-model="subject.rank"
+          v-model="subject.level"
           autocomplete="off"
         />
       </el-form-item>
@@ -111,6 +130,15 @@
       >
         <el-input
           v-model="subject.period"
+          autocomplete="off"
+        />
+      </el-form-item>
+      <el-form-item
+        label="负责人"
+        :label-width="formLabelWidth"
+      >
+        <el-input
+          v-model="subject.userId"
           autocomplete="off"
         />
       </el-form-item>
@@ -199,6 +227,7 @@ export default defineComponent({
         size: 10,
       },
       dialogFormVisible: false,
+      searchNo:"",
       subject: {
         id: 0,
         name: "",
@@ -211,6 +240,21 @@ export default defineComponent({
     this.getSubjectsPage(1);
   },
   methods: {
+    search() {
+      if (this.searchNo == "") {
+        alert("请输入后进行查询");
+        return;
+      }
+      getOne(this.searchNo)
+        .then((res) => {
+          console.log(res);
+          this.subjects=[];
+          this.subjects.push(res.data.subject);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     toEdit(subject) {
       console.log(subject);
       this.dialogFormVisible = true;
