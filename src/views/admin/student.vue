@@ -3,7 +3,7 @@
     <div style="width: 80%;margin: 0 auto;">
       <router-link to="/index">首页</router-link>
       <el-form-item
-        label="学生学号"
+        label="学生"
         :label-width="80"
         style="display:inline-flex; margin-right: 10px;"
       >
